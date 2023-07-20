@@ -44,12 +44,19 @@ namespace Flat.Graphics
 
         }
 
-        public void Begin()
+        public void Begin(bool isTextureFilteringEnable)
         {
+            SamplerState sampler = SamplerState.PointClamp;
+
+            if (isTextureFilteringEnable)
+            {
+                sampler = SamplerState.LinearClamp;
+            }
+
             Viewport vp = this.game.GraphicsDevice.Viewport;
             this.effect.Projection = Matrix.CreateOrthographicOffCenter(0, vp.Width, 0, vp.Height, 0, 1);
 
-            this.sprites.Begin();
+            this.sprites.Begin(blendState: BlendState.AlphaBlend, samplerState: sampler, rasterizerState: RasterizerState.CullNone, effect: this.effect);
         }
 
         public void End()
@@ -57,9 +64,11 @@ namespace Flat.Graphics
             this.sprites.End();
         }
 
-        public void Draw(Texture2D texture, Vector2 position, Color color)
+        public void Draw(Texture2D texture, Vector2 origin, Vector2 position, Color color)
         {
-            this.sprites.Draw(texture, position, color);
+            this.sprites.Draw(texture, position, null, color, 0f, origin, 1f, SpriteEffects.FlipVertically, 0f);
+
+
         }
     }
 }
