@@ -52,7 +52,7 @@ namespace MonoGame
             Viewport viewport = this.GraphicsDevice.Viewport;
 
             this.sprites.Begin(false);
-            this.sprites.Draw(texture, Vector2.Zero, new Vector2(viewport.Width / 2, viewport.Height / 2), Color.White);
+            this.sprites.Draw(texture, null, new Rectangle(32, 32, 521, 256), Color.White);
             this.sprites.End();
 
             base.Draw(gameTime);

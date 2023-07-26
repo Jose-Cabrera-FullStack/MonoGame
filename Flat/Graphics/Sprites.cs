@@ -38,7 +38,7 @@ namespace Flat.Graphics
             {
                 return;
             }
-
+            this.effect?.Dispose();
             this.sprites?.Dispose();
             this.isDisposed = true;
 
@@ -70,5 +70,16 @@ namespace Flat.Graphics
 
 
         }
+
+        public void Draw(Texture2D texture, Rectangle? sourceRectangle, Vector2 origin, Vector2 position, float roation, Vector2 scale, Color color)
+        {
+            this.sprites.Draw(texture, position, sourceRectangle, color, roation, origin, scale, SpriteEffects.FlipVertically, 0f);
+        }
+
+        public void Draw(Texture2D texture, Rectangle? sourceRectangle, Rectangle destinationRectangle, Color color)
+        {
+            this.sprites.Draw(texture, destinationRectangle, sourceRectangle, color, 0f, Vector2.Zero, SpriteEffects.FlipVertically, 0f);
+        }
+
     }
 }
