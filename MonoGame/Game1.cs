@@ -10,6 +10,7 @@ namespace MonoGame
         private GraphicsDeviceManager graphics;
         private Sprites sprites;
         private Texture2D texture;
+        private Screen screen;
 
         public Game1()
         {
@@ -23,8 +24,8 @@ namespace MonoGame
 
         protected override void Initialize()
         {
-
             this.sprites = new Sprites(this);
+            this.screen = new Screen(this, 640, 480);
 
             base.Initialize();
         }
@@ -47,6 +48,7 @@ namespace MonoGame
 
         protected override void Draw(GameTime gameTime)
         {
+            this.screen.Set();
             this.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             Viewport viewport = this.GraphicsDevice.Viewport;
@@ -54,6 +56,9 @@ namespace MonoGame
             this.sprites.Begin(false);
             this.sprites.Draw(texture, null, new Rectangle(32, 32, 521, 256), Color.White);
             this.sprites.End();
+
+            this.screen.UnSet();
+            this.screen.Present(this.sprites);
 
             base.Draw(gameTime);
         }
