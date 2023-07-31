@@ -1,7 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Flat.Graphics;
+using Flat.Input;
 
 namespace MonoGame
 {
@@ -11,7 +13,7 @@ namespace MonoGame
         private Sprites sprites;
         private Texture2D texture;
         private Screen screen;
-
+        private float x = 32f;
         public Game1()
         {
             this.graphics = new GraphicsDeviceManager(this);
@@ -37,9 +39,17 @@ namespace MonoGame
 
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            FlatKeyboard keyboard = FlatKeyboard.Instance;
+            keyboard.Update();
+
+            if (keyboard.IsKeyDown(Keys.Escape))
             {
                 this.Exit();
+            }
+
+            if (keyboard.IsKeyDown(Keys.Right))
+            {
+                this.x += 1f;
             }
 
 
@@ -54,7 +64,7 @@ namespace MonoGame
             Viewport viewport = this.GraphicsDevice.Viewport;
 
             this.sprites.Begin(false);
-            this.sprites.Draw(texture, null, new Rectangle(32, 32, 521, 256), Color.White);
+            this.sprites.Draw(texture, null, new Rectangle((int)x, 32, 521, 256), Color.White);
             this.sprites.End();
 
             this.screen.UnSet();
