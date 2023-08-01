@@ -13,6 +13,7 @@ namespace MonoGame
         private Sprites sprites;
         private Texture2D texture;
         private Screen screen;
+        private Shapes shapes;
         private float x = 32f;
         public Game1()
         {
@@ -28,6 +29,7 @@ namespace MonoGame
         {
             this.sprites = new Sprites(this);
             this.screen = new Screen(this, 640, 480);
+            this.shapes = new Shapes(this);
 
             base.Initialize();
         }
@@ -66,6 +68,10 @@ namespace MonoGame
             this.sprites.Begin(false);
             this.sprites.Draw(texture, null, new Rectangle((int)x, 32, 521, 256), Color.White);
             this.sprites.End();
+
+            this.shapes.Begin();
+            this.shapes.DrawRectangle(32, 32, 64, 64, Color.Red);
+            this.shapes.End();
 
             this.screen.UnSet();
             this.screen.Present(this.sprites);
