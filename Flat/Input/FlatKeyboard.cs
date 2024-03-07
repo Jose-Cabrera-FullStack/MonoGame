@@ -1,20 +1,30 @@
-using System;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+
 namespace Flat.Input
 {
     public sealed class FlatKeyboard
     {
-        private static readonly Lazy<FlatKeyboard> Lazy = new Lazy<FlatKeyboard>(() => new FlatKeyboard());
-        public static FlatKeyboard Instance => Lazy.Value;
+        private static Lazy<FlatKeyboard> LazyInstance = new Lazy<FlatKeyboard>(() => new FlatKeyboard());
 
-        private KeyboardState prevKeyboardState;
-        private KeyboardState currKeyboardState;
-
-        public FlatKeyboard()
+        public static FlatKeyboard Instance
         {
-            this.prevKeyboardState = Keyboard.GetState();
-            this.currKeyboardState = prevKeyboardState;
+            get { return LazyInstance.Value; }
+        }
+
+        private KeyboardState currKeyboardState;
+        private KeyboardState prevKeyboardState;
+        
+        public bool IsKeyAvailable
+        {
+            get { return this.currKeyboardState.GetPressedKeyCount() > 0; }
+        }
+        
+        private FlatKeyboard()
+        {
+            this.currKeyboardState = Keyboard.GetState();
+            this.prevKeyboardState = this.currKeyboardState;
         }
 
         public void Update()
