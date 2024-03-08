@@ -19,6 +19,8 @@ public class Game1 : Game
     private Shapes shapes;
     private Camera camera;
 
+    private FlatVector vectorA = new FlatVector(3f, 4f);
+
     public Game1()
     {
         this.graphics = new GraphicsDeviceManager(this);
@@ -35,23 +37,6 @@ public class Game1 : Game
     protected override void Initialize()
     {
 
-        float x1 = 0.5f;
-        float y1 = 0.002f;
-        float x2 = 0.001f;
-        float y2 = 0.003f;
-
-        Stopwatch watch = new Stopwatch();
-
-        watch.Start();
-        for (int i = 0; i < 1000000; i++)
-        {
-            x1 = x1 + x2;
-            y1 = y1 + y2;
-        }
-
-
-        Console.WriteLine($"{x1}, {y1}");
-        Console.WriteLine("Time: " + watch.ElapsedMilliseconds);
 
         FlatUtil.SetRelativeBackBufferSize(this.graphics, 0.85f);
 
@@ -99,8 +84,11 @@ public class Game1 : Game
         this.screen.Set();
         GraphicsDevice.Clear(new Color(50, 60, 70));
 
+        FlatVector normalized = FlatPhysics.FlatMath.Normalize(this.vectorA);
+
         this.shapes.Begin(this.camera);
-        this.shapes.DrawCircle(0, 0, 32, 32, Color.White);
+        this.shapes.DrawLine(Vector2.Zero, FlatConverter.ToVector2(this.vectorA), Color.White);
+        this.shapes.DrawLine(Vector2.Zero, FlatConverter.ToVector2(normalized), Color.Red);
         this.shapes.End();
 
         this.screen.Unset();
