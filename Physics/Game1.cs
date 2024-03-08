@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Input;
 using Flat;
 using Flat.Graphics;
 using Flat.Input;
+using System.Diagnostics;
+using FlatPhysics;
 
 
 namespace Physics;
@@ -32,6 +34,25 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
+
+        float x1 = 0.5f;
+        float y1 = 0.002f;
+        float x2 = 0.001f;
+        float y2 = 0.003f;
+
+        Stopwatch watch = new Stopwatch();
+
+        watch.Start();
+        for (int i = 0; i < 1000000; i++)
+        {
+            x1 = x1 + x2;
+            y1 = y1 + y2;
+        }
+
+
+        Console.WriteLine($"{x1}, {y1}");
+        Console.WriteLine("Time: " + watch.ElapsedMilliseconds);
+
         FlatUtil.SetRelativeBackBufferSize(this.graphics, 0.85f);
 
         this.screen = new Screen(this, 1280, 720);
